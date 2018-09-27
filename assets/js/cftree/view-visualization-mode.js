@@ -423,6 +423,7 @@ apx.viewMode.loadConceptMap = (data) => {
 
 
     var svg = d3.select("#graph").append("svg")
+        .attr("class", "scroll-svg")
         .attr("width", diameter)
         .attr("height", diameter)
         .append("g")
@@ -477,6 +478,7 @@ apx.viewMode.loadConceptMap = (data) => {
         .on("mouseover", mouseover)
         .on("mouseout", mouseout);
 
+    //var rowEnter = function(rowSelection) {
     inode.append('rect')
         .attr('width', rect_width)
         .attr('height', rect_height)
@@ -484,11 +486,35 @@ apx.viewMode.loadConceptMap = (data) => {
         .attr('id', function(d) { return d.id; })
         .attr('fill', function(d) { return getColor(d); });
 
-    inode.append("text")
-        .attr('id', function(d) { return d.id + '-txt'; })
-        .attr('text-anchor', 'middle')
-        .attr("transform", "translate(" + rect_width/2 + ", " + rect_height * .75 + ")")
-        .text(function(d) { return d.name; });
+            inode.append("text")
+            .attr('id', function(d) { return d.id + '-txt'; })
+            .attr('text-anchor', 'middle')
+            .attr("transform", "translate(" + rect_width/2 + ", " + rect_height * .75 + ")")
+    //};
+
+    //var rowUpdate = function(rowSelection) {
+        rowSelection.select("rect")
+            .attr('fill', function(d) { return getColor(d); });
+
+        rowSelection.select("text")
+            .text(function(d) { return d.name; });
+    //};
+
+    var rowExit = function(rowSelection) {
+    };
+
+   /*  var virtualScroller = global.virtualScroller()
+        .rowHeight(rect_height)
+        .enter(rowEnter)
+        .update(rowUpdate)
+        .exit(rowExit)
+        .svg(svg)
+        .totalRows(data.inner.length)
+        .viewport(d3.select("#graph"))
+
+    virtualScroller.data(data.inner, function(d) { return d.id })
+
+    inode.call(virtualScroller) */
 
     // need to specify x/y/etc
 
